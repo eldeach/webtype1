@@ -76,6 +76,11 @@ app.listen(8080, function() {
 
 
 
-app.get('/',function(req,res){
-res.send('//')
-})
+  //================================================================================ [공통 기능] 모든 route를 react SPA로 연결 (이 코드는 맨 아래 있어야함)
+  app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, process.env.react_build_path+'index.html'));
+  });
+
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, process.env.react_build_path+'index.html'));
+  });
