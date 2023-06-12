@@ -10,7 +10,7 @@ function passportLocal(app){
     app.use(passport.session());
 
 
-    app.post('/local-login', passport.authenticate('local', {successRedirect :"/",failureRedirect : '/', failureFlash : true}));
+    app.post('/local-login', passport.authenticate('local', {successRedirect :"/",failureRedirect : '/login', failureFlash : true}));
 
     passport.use(new LocalStrategy({
       usernameField: 'user_account', // form에서 전달받은 값 중 username으로 사용할 html div의 id 값
