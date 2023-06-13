@@ -26,17 +26,8 @@ function passportLocal(app){
 
     app.get('/local-login-fail', function(req,res){
 
-      let msg ="";
-      if (req.session.flash.error.slice(-1)[0] === 'msg2'){
-        msg=msgCodeBook.msg2.eng
-      }
-      else if (req.session.flash.error.slice(-1)[0] === 'msg3'){
-        msg=msgCodeBook.msg3.eng
-      }
-      else if (req.session.flash.error.slice(-1)[0] === 'msg4'){
-        msg=msgCodeBook.msg4.eng
-      }
-      res.status(401).json({dr:true, msgCode:req.session.flash.error.slice(-1)[0] , msg : msg}) // dr = designed_response
+      let msgCode =req.session.flash.error.slice(-1)[0]
+      res.status(401).json({dr:true, msgCode: msgCode, msg : msgCodeBook[msgCode]}) // dr = designed_response
     })
     
     app.get('/local-login-success', mw_LoginCheck, function (req, res) {
