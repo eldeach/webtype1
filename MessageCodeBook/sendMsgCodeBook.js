@@ -9,5 +9,4 @@ function sendMsgCodeBook(app){
         }
       })
 }
-
 module.exports = sendMsgCodeBook;
