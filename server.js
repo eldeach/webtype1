@@ -69,11 +69,8 @@ app.listen(8080, function() {
 //================================================================================ https 의존성으로 certificate와 private key로 새로운 서버를 시작
 //https.createServer(options, app).listen(process.env.PORT, () => {console.log('HTTPS server started on port '+ process.env.PORT)});
 
-// const passportLocal = require('./Passport/LocalStrategy/passportLocal');
-// passportLocal(app);
-
-const passportLocalJWT = require('./Passport/LocalStrategy/passportLocalJWT');
-passportLocalJWT(app);
+const passportLocal = require('./Passport/LocalStrategy/passportLocal');
+passportLocal(app);
 
 //================================================================================ [공통 기능] 모든 route를 react SPA로 연결 (이 코드는 맨 아래 있어야함)
 app.get('/', function (req, res) {
