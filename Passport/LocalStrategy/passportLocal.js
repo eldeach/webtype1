@@ -7,10 +7,11 @@ const session = require('express-session'); // 세션 라이브러리
 const msgCodeBook = require('../../MessageCodeBook/msgCodeBook')
 const authCheck = require('./AuthFunctions/authCheck');
 const mw_LoginCheck = require('./AuthFunctions/Middleware/mw_LoginCheck');
-const logout = require('./AuthFunctions/logout');
-const userExist = require('./AuthFunctions/userExist');
-const userLock = require('./AuthFunctions/userLock');
-const pwCheck = require('./AuthFunctions/pwCheck');
+const logout = require('./AuthFunctions/HandleUser/logout');
+const userExist = require('./AuthFunctions/HandleUser/userExist');
+const userLock = require('./AuthFunctions/HandleUser/userLock');
+const loginCheck = require('./AuthFunctions/HandleUser/loginCheck');
+const pwCheck = require('./AuthFunctions/HandlePW/pwCheck');
 
 
 
@@ -23,6 +24,7 @@ function passportLocal(app){
     //===================================================================================== 미들웨어 선언 밑에다 개발해야함
     authCheck(app);
     logout(app);
+    loginCheck(app)
 
     app.get('/local-login-fail', function(req,res){
 
@@ -31,7 +33,8 @@ function passportLocal(app){
     })
     
     app.get('/local-login-success', mw_LoginCheck, function (req, res) {
-      res.status(200).json({dr:true, msgCode:'msg1', msg:msgCodeBook.msg1.eng})
+      let msgCode = 'msg1'
+      res.status(200).json({dr:true, msgCode:msgCode, msg:msgCodeBook[msgCode]})
     })
 
 

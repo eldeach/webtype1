@@ -14,6 +14,14 @@ const msgCodeBook = {
     msg4 : {
         kor: "계정이 존재하지 않습니다.",
         eng: "The user account does not exist."
+    },
+    msg5 : {
+        kor: "로그인상태가 아닙니다.",
+        eng: "You are not logged in."
+    },
+    msg6 : {
+        kor: "로그인된 상태입니다.",
+        eng: "You are logged in."
     }
     
 }
