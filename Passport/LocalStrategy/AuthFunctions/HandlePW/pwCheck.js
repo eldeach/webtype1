@@ -6,11 +6,11 @@ function pwCheck(userID, userPW){
     let correctPW = 'a';
     
     if(userPW===correctPW){
-        pwFailCount.zero()
+        pwFailCount.zero(userID)
         return true;
     }
     else {
-        pwFailCount.up()
+        pwFailCount.up(userID)
         return false;
     }
 }

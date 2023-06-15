@@ -12,6 +12,7 @@ const userExist = require('./AuthFunctions/HandleUser/userExist');
 const userLock = require('./AuthFunctions/HandleUser/userLock');
 const loginCheck = require('./AuthFunctions/HandleUser/loginCheck');
 const pwCheck = require('./AuthFunctions/HandlePW/pwCheck');
+const pwFailCount = require('./AuthFunctions/HandlePW/pwFailCount');
 
 
 
@@ -29,7 +30,17 @@ function passportLocal(app){
     app.get('/local-login-fail', function(req,res){
 
       let msgCode =req.session.flash.error.slice(-1)[0]
-      res.status(401).json({dr:true, msgCode: msgCode, msg : msgCodeBook[msgCode]}) // dr = designed_response
+      let msgText={};
+      if (msgCode === 'msg3'){
+        msgText = {
+          ...{kor : msgCodeBook[msgCode].kor + " (회수 : " + pwFailCount.number(req.userID) +")",
+          eng : msgCodeBook[msgCode].eng + " (counts : " + pwFailCount.number(req.userID) +")",}
+        }
+      }
+      else{
+        msgText = msgCodeBook[msgCode]
+      }
+      res.status(401).json({dr:true, msgCode: msgCode, msg : msgText}) // dr = designed_response
     })
     
     app.get('/local-login-success', mw_LoginCheck, function (req, res) {
