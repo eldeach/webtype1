@@ -22,6 +22,10 @@ const msgCodeBook = {
     msg6 : {
         kor: "로그인된 상태입니다.",
         eng: "You are logged in."
+    },
+    msg7 : {
+        kor: "로그아웃 되었습니다.",
+        eng: "You have been logged out."
     }
     
 }

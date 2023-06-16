@@ -1,11 +1,16 @@
+// ======================================================================================== [Import Libaray]
+
 // ======================================================================================== [Import Component] js
-const mw_LoginCheck = require('../Middleware/mw_LoginCheck');
+const msgCodeBook = require('../../../../MessageCodeBook/msgCodeBook')
 
 function logout(app){
-    app.get('/logout', mw_LoginCheck,function(req,res){
+    app.get('/logout', function(req,res){
         req.session.destroy(async() =>
         {
           res.clearCookie('connect.sid');
+          console.log("logout")
+          let msgCode = 'msg7'
+          res.status(200).json({dr:true, msgCode:msgCode, msg:msgCodeBook[msgCode]})
         });
       })
 }
