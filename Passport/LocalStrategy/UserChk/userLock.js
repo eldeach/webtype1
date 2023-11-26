@@ -1,5 +1,5 @@
 function userLock(userID){
-    let userLock = true;
+    let userLock = false;
 
     if (userLock) return true
     else return false

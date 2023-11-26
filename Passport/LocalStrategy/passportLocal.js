@@ -21,9 +21,6 @@ const userLock = require('./UserChk/userLock');
 const userExist = require('./UserChk/userExist');
 const pwCheck = require('./UserChk/pwCheck');
 
-
-
-
 function passportLocal(app){
   const expireTimeMinutes=process.env.passport_session_expire_time_minutes
   app.use(session({secret : process.env.passport_secret_code, resave : false, saveUninitialized: false, cookie: { maxAge : expireTimeMinutes*60000 }, rolling:true}));
