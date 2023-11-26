@@ -8,18 +8,14 @@ const saltRounds = 10;
 
 
 // ======================================================================================== [Import Component] js
-const msgCodeBook = require('../../MessageCodeBook/msgCodeBook');
 const passportLocalMsg = require('./passportLocalMsg');
 
 const {sendQry, selectQry, insertQry, updateQry, batchInsertFunc, batchInsertOnDupliFunc, whereClause, truncateTable} = require ('../../dbconns/maria/thisdb');
 
 const mw_LoginCheck = require('./Middleware/mw_LoginCheck');
 const logout = require('./UserChk/logout');
-const authCheck = require('./UserChk/authCheck');
-const pwFailCount = require('./UserChk/pwFailCount')
-const userLock = require('./UserChk/userLock');
-const userExist = require('./UserChk/userExist');
-const pwCheck = require('./UserChk/pwCheck');
+
+const pwFailCount = require('./UserChk/pwFailCount');
 
 function passportLocal(app){
   const expireTimeMinutes=process.env.passport_session_expire_time_minutes
@@ -27,7 +23,6 @@ function passportLocal(app){
   app.use(passport.initialize());
   app.use(passport.session());
   //===================================================================================== 미들웨어 선언 밑에다 개발해야함
-  authCheck(app);
   logout(app);
 
   app.post('/local-login', passport.authenticate('local', {successRedirect :"/local-login-success",failureRedirect : '/local-login-fail', failureFlash : true}));
