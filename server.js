@@ -29,7 +29,7 @@ const flash= require('connect-flash')
 const { default: axios } = require('axios');
 
 //================================================================================ [공통] maria DB 라이브러리 import
-//const {strFunc, insertFunc, batchInsertFunc, batchInsertOnDupliFunc, whereClause, truncateTable} = require ('./dbconns/maria/thisdb');
+const {sendQry, selectQry, insertQry, updateQry, batchInsertFunc, batchInsertOnDupliFunc, whereClause, truncateTable} = require ('./dbconns/maria/thisdb');
 
 //================================================================================ [공통] OS타입 라이브러리
 //const { type } = require('os');
@@ -72,6 +72,36 @@ app.listen(8080, function() {
 const passportLocal = require('./Passport/LocalStrategy/passportLocal');
 passportLocal(app);
 
+
+app.get('/selecttest', async function(req, res){
+  let rs = await sendQry(selectQry({
+    cols : ["*"],
+    tblName : "tb_auth_code",
+    whereClause : "auth_code = 'authc_3'"
+  }))
+  res.send(rs)
+});
+
+app.get('/inserttest', async function(req, res){
+  let rs = await sendQry(insertQry({
+    cols : ["auth_code", "auth_title", "auth_description"],
+    tblName : "tb_auth_code",
+    values : ["'authc_3'","'Maintenance'","'Maintenance 권한'"]
+  }))
+  res.json(rs.affectedRows)
+});
+
+
+app.get('/updatetest', async function(req, res){
+  let rs = await sendQry(updateQry({
+    cols : ["auth_title", "auth_description"],
+    tblName : "tb_auth_code",
+    values : ["'Engineer!'","'Engineer 권한임 말이 필요없제~?!'"],
+    whereClause : "auth_code = 'authc_2'"
+  }))
+  
+  res.json(rs.affectedRows)
+});
 //================================================================================ [공통 기능] 모든 route를 react SPA로 연결 (이 코드는 맨 아래 있어야함)
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, process.env.react_build_path+'index.html'));

@@ -1,5 +1,7 @@
 const mariadb = require('mariadb');
 const { resolve } = require('path');
+
+// Connection 정보 정의
 const pool = mariadb.createPool({
      host: process.env.THISDB_HOST,
      port: process.env.THISDB_PORT,
@@ -8,45 +10,81 @@ const pool = mariadb.createPool({
      connectionLimit: 5
 });
 
+// DB Connection 객체 생성 함수
 async function getConn(dbName=process.env.THISDB_NAME){
-    const conn = await pool.getConnection();
-    conn.query('USE ' + dbName);
-    return conn;
+  const conn = await pool.getConnection();
+  conn.query('USE ' + dbName);
+  return conn;
 }
 
-async function selectQry(cols,tblName,whereClause){
-    const conn = new getConn();
-    const rows = await conn.query('SELECT '+cols+' FROM '+tblName);
+// 이하는 커스텀 함수들
+function commaJoin(cols){
+  if (cols.length === 1){
+    return cols;
+  }
+  else {
+    return cols.join(', ');
+  }
+};
+
+async function sendQry(str){
+  let conn;
+  try{
+    conn = await getConn();
+    const rows = await conn.query(str);
     return rows;
+  } catch (err) {
+    console.log(err)
+  } finally {
+    conn.release();
+    conn.end()
+  }
+};
+
+function selectQry(materials){
+  // materials : {
+  //   cols : [배열],
+  //   tblName : "테이블 명칭",
+  //   whereClause : "조건식"
+  // }
+  let str = "";
+  if (materials.whereClause.length > 0) {
+    str = "SELECT ".concat(commaJoin(materials.cols)).concat(' FROM ' ).concat(materials.tblName).concat(' WHERE ').concat(materials.whereClause)
+  } else {
+    str = "SELECT ".concat(commaJoin(materials.cols)).concat(' FROM ' ).concat(materials.tblName);
+  }
+  return str;
+};
+
+function insertQry (materials){
+  // materials : {
+  //   cols : [배열],
+  //   tblName : "테이블 명칭",
+  //   values : [배열]
+  // }
+  let str = "INSERT INTO ".concat(materials.tblName).concat("(").concat(commaJoin(materials.cols)).concat(') VALUES (' ).concat(commaJoin(materials.values).concat(")"));
+  return str;
+};
+
+function updateQry (materials){
+  // materials : {
+  //   cols : [배열],
+  //   tblName : "테이블 명칭",
+  //   values : [배열]
+  //   whereClause : "조건식"
+  // }
+  let setArr=[];
+  materials.cols.map((col, index)=>{
+    setArr.push (col.concat(" = ").concat(materials.values[index]))
+  });
+
+  let str = "UPDATE ".concat(materials.tblName).concat(" SET ".concat(commaJoin(setArr))).concat(" WHERE ").concat(materials.whereClause)
+  
+  console.log(str)
+
+  return str;
 }
 
-  async function strFunc (reqQuery) {
-    let conn;
-    try {
-      conn = await pool.getConnection();
-      conn.query('USE ' + process.env.THISDB_NAME);
-      const rows = await conn.query(reqQuery)
-      return rows
-    } catch (err) {
-      console.log(err)
-    } finally {
-      if (conn) conn.end();
-    }
-  }
-
-  async function insertFunc (targetTable, columNamesArr,  questions, valueArrys) {
-    let conn;
-    try {
-      conn = await pool.getConnection();
-      conn.query('USE ' + process.env.THISDB_NAME);
-      const rows = await conn.query("INSERT INTO " + targetTable + " ("+columNamesArr.join(', ')+") VALUES("+questions.join(', ')+")",valueArrys)
-      return rows
-    } catch (err) {
-      console.log(err)
-    } finally {
-      if (conn) conn.end();
-    }
-  }
 
   async function batchInsertFunc (targetTable, columNamesArr, questions, valueArrys, truncTbl) {
     let conn;
@@ -123,4 +161,4 @@ async function selectQry(cols,tblName,whereClause){
     return clause
 }
 
-  module.exports={strFunc, insertFunc, batchInsertFunc, batchInsertOnDupliFunc, whereClause, truncateTable}
+  module.exports={sendQry, selectQry, insertQry, updateQry, batchInsertFunc, batchInsertOnDupliFunc, whereClause, truncateTable}

@@ -1,5 +1,5 @@
 // ======================================================================================== [Import Component] js
-const mw_LoginCheck = require('./Middleware/mw_LoginCheck');
+const mw_LoginCheck = require('../Middleware/mw_LoginCheck');
 
 function authCheck(app){
     app.get('/auth-check',mw_LoginCheck,function(req, res){
