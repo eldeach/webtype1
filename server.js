@@ -75,18 +75,31 @@ const {sendQry, selectQry, insertQry, updateQry, batchInsertFunc, batchInsertOnD
 const passportLocal = require('./Passport/LocalStrategy/passportLocal');
 passportLocal(app);
 
+// Sys1
+const approvalUserList = require('./sys1/get/approvalUserList');
+approvalUserList(app)
+
 // Middleware Function
 const mwAuthCheck = require ( './Passport/LocalStrategy/handleSessionFunc/middleware/mwAuthCheck' );
 
+app.get('/userlist', async function(req, res){
+    let rs = await sendQry(selectQry({
+      cols : ["*"],
+      tblName : "tb_user",
+      whereClause : ""
+    }))
+    res.json(rs)
+  });
 
 app.get('/selecttest', async function(req, res){
   let rs = await sendQry(selectQry({
     cols : ["*"],
     tblName : "tb_auth_code",
-    whereClause : "auth_code = 'authc_3'"
+    whereClause : "auth_code like '%'"
   }))
   res.send(rs)
 });
+
 
 app.get('/inserttest', async function(req, res){
   let rs = await sendQry(insertQry({

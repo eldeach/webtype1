@@ -48,7 +48,7 @@ function passportLocal ( app ) {
     let rs = await sendQry( selectQry({
       cols : ["*"],
       tblName : "tb_user",
-      whereClause : "user_account = '".concat(userID).concat("'")
+      whereClause : "user_account = '".concat(userID).concat("' AND approval_status = 'APPROVED'")
     }));
     if ( rs.length === 1 ) {
       if( rs[0].user_lock ) {
