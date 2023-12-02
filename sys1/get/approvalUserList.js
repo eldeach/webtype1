@@ -3,7 +3,7 @@
 const { sendQry } = require ('../../dbconns/maria/thisdb');
 
 async function approvalUserList (app){
-    app.get('/approvaluserlist', async function(req, res) {
+    app.get('/getapprovaluserlist', async function(req, res) {
         let rs = await sendQry(
             `SELECT A.user_account AS user_account, A.user_name AS user_name, B.job_team AS job_team, B.job_position AS job_position, B.job_company AS job_company `
             .concat(`FROM tb_user AS A LEFT OUTER JOIN tb_user_position AS B `)

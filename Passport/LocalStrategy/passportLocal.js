@@ -36,7 +36,7 @@ function passportLocal ( app ) {
   })
 
   app.get('/local-login-fail', function(req,res) {
-    res.status(401).json(passportLocalMsg.loginFail[req.session.flash.error.slice(-1)[0]]) 
+    res.status(452).json(passportLocalMsg.loginFail[req.session.flash.error.slice(-1)[0]]) 
   })
     
   passport.use( new LocalStrategy( {

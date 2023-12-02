@@ -62,7 +62,13 @@ function insertQry (materials){
   //   tblName : "테이블 명칭",
   //   values : [배열]
   // }
-  let str = "INSERT INTO ".concat(materials.tblName).concat("(").concat(commaJoin(materials.cols)).concat(') VALUES (' ).concat(commaJoin(materials.values).concat(")"));
+  let str
+  let valueLength = materials.cols.length
+  if (valueLength > 1){
+    str = "INSERT INTO ".concat(materials.tblName).concat("(").concat(commaJoin(materials.cols)).concat(') VALUES (' ).concat(commaJoin(materials.values).concat(")"));
+  } else {
+    str = "INSERT INTO ".concat(materials.tblName).concat("(").concat(materials.cols[0]).concat(') VALUES (' ).concat(materials.values[0]).concat(")");
+  }
   return str;
 };
 

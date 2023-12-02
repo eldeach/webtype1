@@ -76,51 +76,21 @@ const passportLocal = require('./Passport/LocalStrategy/passportLocal');
 passportLocal(app);
 
 // Sys1
+const userList = require('./sys1/get/userList');
+userList(app)
+
 const approvalUserList = require('./sys1/get/approvalUserList');
 approvalUserList(app)
+
+const addAccount = require('./sys1/post/addAccount/addAccount');
+addAccount(app)
+
+const myReviewList = require('./sys1/get/myReviewList');
+myReviewList(app)
 
 // Middleware Function
 const mwAuthCheck = require ( './Passport/LocalStrategy/handleSessionFunc/middleware/mwAuthCheck' );
 
-app.get('/userlist', async function(req, res){
-    let rs = await sendQry(selectQry({
-      cols : ["*"],
-      tblName : "tb_user",
-      whereClause : ""
-    }))
-    res.json(rs)
-  });
-
-app.get('/selecttest', async function(req, res){
-  let rs = await sendQry(selectQry({
-    cols : ["*"],
-    tblName : "tb_auth_code",
-    whereClause : "auth_code like '%'"
-  }))
-  res.send(rs)
-});
-
-
-app.get('/inserttest', async function(req, res){
-  let rs = await sendQry(insertQry({
-    cols : ["auth_code", "auth_title", "auth_description"],
-    tblName : "tb_auth_code",
-    values : ["'authc_3'","'Maintenance'","'Maintenance 권한'"]
-  }))
-  res.json(rs.affectedRows)
-});
-
-
-app.get('/updatetest', async function(req, res){
-  let rs = await sendQry(updateQry({
-    cols : ["auth_title", "auth_description"],
-    tblName : "tb_auth_code",
-    values : ["'Engineer!'","'Engineer 권한임 말이 필요없제~?!'"],
-    whereClause : "auth_code = 'authc_2'"
-  }))
-  
-  res.json(rs.affectedRows)
-});
 //================================================================================ [공통 기능] 모든 route를 react SPA로 연결 (이 코드는 맨 아래 있어야함)
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, process.env.react_build_path+'index.html'));

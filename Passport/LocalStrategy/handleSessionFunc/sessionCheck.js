@@ -7,7 +7,7 @@ function sessionCheck ( app ) {
         if ( req.user ) {
             res.status( 200 ).json( passportLocalMsg.sessionOk )
         } else {
-            res.status( 401 ).json( passportLocalMsg.sessionNotOk )
+            res.status( 452 ).json( passportLocalMsg.sessionNotOk )
         }
     })
 }

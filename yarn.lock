@@ -139,7 +139,7 @@ body-parser@1.20.1:
 
 body-parser@^1.20.2:
   version "1.20.2"
-  resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.20.2.tgz#6feb0e21c4724d06de7ff38da36dad4f57a747fd"
+  resolved "https://registry.npmjs.org/body-parser/-/body-parser-1.20.2.tgz"
   integrity sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==
   dependencies:
     bytes "3.1.2"
@@ -299,7 +299,7 @@ detect-libc@^2.0.0:
 
 dotenv@^16.1.4:
   version "16.1.4"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.1.4.tgz#67ac1a10cd9c25f5ba604e4e08bc77c0ebe0ca8c"
+  resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.1.4.tgz"
   integrity sha512-m55RtE8AsPeJBpOIFKihEmqUcoVncQIwo7x9U8ZwLEZw9ZpXboz2c+rvog+jUaJvVrZ5kBOeYQBX5+8Aa/OZQw==
 
 ecdsa-sig-formatter@1.0.11:
@@ -357,7 +357,7 @@ etag@~1.8.1:
 
 express-sanitizer@^1.0.6:
   version "1.0.6"
-  resolved "https://registry.yarnpkg.com/express-sanitizer/-/express-sanitizer-1.0.6.tgz#b43ad9697f700cb59775f1ab3a1800a95313a928"
+  resolved "https://registry.npmjs.org/express-sanitizer/-/express-sanitizer-1.0.6.tgz"
   integrity sha512-77Ruhr/NTVGE2Ecc8pH3XedpreQiHRtwA+ONON0/nJam8Re/AvkGngd8EqKb2YKCqaL4Iw+W33IJXgHgMe7xaQ==
   dependencies:
     sanitizer "0.1.3"
@@ -566,6 +566,11 @@ inherits@2, inherits@2.0.4, inherits@^2.0.3:
   resolved "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
+install@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/install/-/install-0.13.0.tgz#6af6e9da9dd0987de2ab420f78e60d9c17260776"
+  integrity sha512-zDml/jzr2PKU9I8J/xyZBQn8rPCAY//UOYNmR01XwNwyfhEWObo2SWfSl1+0tm1u6PhxLwDnfsT/6jB7OUxqFA==
+
 ipaddr.js@1.9.1:
   version "1.9.1"
   resolved "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.9.1.tgz"
@@ -629,7 +634,7 @@ make-dir@^3.1.0:
 
 mariadb@3.1.1:
   version "3.1.1"
-  resolved "https://registry.npmjs.org/mariadb/-/mariadb-3.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/mariadb/-/mariadb-3.1.1.tgz#aa8b9f9dafd74a8636168f1211b285cb1e738a9e"
   integrity sha512-Y5tu9pQr8uZs63FATr7ldODXn8N2aIFlAg/rp6kRTohgQiJfdl9DNGu9PXRTYdY4JgF5mT2ASD81Jdo5kfGYzg==
   dependencies:
     "@types/geojson" "^7946.0.10"
@@ -787,7 +792,7 @@ parseurl@~1.3.3:
 
 passport-jwt@^4.0.1:
   version "4.0.1"
-  resolved "https://registry.yarnpkg.com/passport-jwt/-/passport-jwt-4.0.1.tgz#c443795eff322c38d173faa0a3c481479646ec3d"
+  resolved "https://registry.npmjs.org/passport-jwt/-/passport-jwt-4.0.1.tgz"
   integrity sha512-UCKMDYhNuGOBE9/9Ycuoyh7vP6jpeTp/+sfMJl7nLff/t6dps+iaeE0hhNkKN8/HZHcJ7lCdOyDxHdDoxoSvdQ==
   dependencies:
     jsonwebtoken "^9.0.0"
@@ -807,7 +812,7 @@ passport-strategy@1.x.x, passport-strategy@^1.0.0:
 
 passport@0.6.0:
   version "0.6.0"
-  resolved "https://registry.yarnpkg.com/passport/-/passport-0.6.0.tgz#e869579fab465b5c0b291e841e6cc95c005fac9d"
+  resolved "https://registry.npmjs.org/passport/-/passport-0.6.0.tgz"
   integrity sha512-0fe+p3ZnrWRW74fe8+SvCyf4a3Pb2/h7gFkQ8yTJpAO50gDzlfjZUZTO1k5Eg9kUct22OxHLqDZoKUWRHOh9ug==
   dependencies:
     passport-strategy "1.x.x"
