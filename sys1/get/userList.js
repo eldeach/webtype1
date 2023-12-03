@@ -33,7 +33,7 @@ async function userList (app){
                 J.approval_payload AS approval_payload,
                 J.user_auth AS user_auth,
                 J.user_email AS user_email,
-                J.user_phone,
+                J.user_phone AS user_phone,
                     CONCAT('[',
                         GROUP_CONCAT(
                             CONCAT('{',

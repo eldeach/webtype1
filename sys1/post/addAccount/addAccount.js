@@ -62,7 +62,7 @@ async function addAccount ( app ) {
             if ( req.body.immediate_effective ) {
                 approval_status = 'APPROVED'
             }
-            let approval_payload_id = await insertNewApprovald('tb_user' )
+            let approval_payload_id = await insertNewApprovald('tb_user', 'sys1', '사용자 계정 (User account)', 'System 1' )
             let user_email_id = await insertNewIdNumber( 'user_email_id', 'tb_user_email_id', 'uei_' )
             let user_phone_id = await insertNewIdNumber( 'user_phone_id', 'tb_user_phone_id', 'upi_' )
             let user_position_id = await insertNewIdNumber( 'user_position_id', 'tb_user_position_id', 'upi_' )

@@ -84,6 +84,9 @@ addAccount(app)
 const myReviewList = require('./sys1/get/myReviewList');
 myReviewList(app)
 
+const elecSign = require('./sys1/put/elecSign/elecSign');
+elecSign(app)
+
 // Middleware Function
 const mwAuthCheck = require ( './Passport/LocalStrategy/handleSessionFunc/middleware/mwAuthCheck' );
 
