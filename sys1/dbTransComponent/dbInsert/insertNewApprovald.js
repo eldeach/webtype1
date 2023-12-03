@@ -9,8 +9,7 @@ async function insertNewApprovald (tblName) {
     let newId = `ap_${parseInt(rs[0].max_no) + 1}`
     console.log(newId)
     let inputRs = await sendQry(
-        `INSERT INTO tb_approval_payload_id (approval_payload_id, table_name)`
-        .concat(`VALUES ('${newId}', '${tblName}')`)
+        `INSERT INTO tb_approval_payload_id (approval_payload_id, tbl_name) VALUES ('${newId}', '${tblName}')`
     )
     return newId;
 }

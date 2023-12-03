@@ -4,16 +4,22 @@ const { sendQry } = require ('../../dbconns/maria/thisdb');
 
 async function userList (app){
     app.get('/getuserlist', async function(req, res) {
-        let rs = await sendQry(
-            `
+        console.log(req.query.approval_status)
+        let approvalStatus = req.query.approval_status
+        let rs = await sendQry(`
             SELECT
-                J.user_account AS user_account,
+                J.uuid_binary AS uuid_binary,
                 J.data_ver AS data_ver,
+                J.data_sub_ver AS data_sub_ver,
+                J.approval_status AS approval_status,
+                J.remark AS remark,
+                J.revision_history AS revision_history,
+                J.approval_payload_id AS approval_payload_id,
+                J.user_account AS user_account,
                 J.user_name AS user_name,
                 J.user_nickname AS user_nickname,
                 J.user_birthday AS user_birthday,
                 J.user_gender AS user_gender,
-                J.revision_history AS revision_history,
                 J.approval_payload AS approval_payload,
                 J.user_auth AS user_auth,
                 J.user_email AS user_email,
@@ -29,14 +35,19 @@ async function userList (app){
                         '}') SEPARATOR ","),
                     ']') AS user_position
             FROM (
-                SELECT 
-                    H.user_account AS user_account,
+                SELECT
+                    H.uuid_binary AS uuid_binary,
                     H.data_ver AS data_ver,
+                    H.data_sub_ver AS data_sub_ver,
+                    H.approval_status AS approval_status,
+                    H.remark AS remark,
+                    H.revision_history AS revision_history,
+                    H.approval_payload_id AS approval_payload_id,
+                    H.user_account AS user_account,
                     H.user_name AS user_name,
                     H.user_nickname AS user_nickname,
                     H.user_birthday AS user_birthday,
                     H.user_gender AS user_gender,
-                    H.revision_history AS revision_history,
                     H.approval_payload AS approval_payload,
                     H.user_auth AS user_auth,
                     H.user_email AS user_email,
@@ -52,13 +63,18 @@ async function userList (app){
                     H.user_position_id AS user_position_id
                 FROM (
                     SELECT
-                        F.user_account AS user_account,
+                        F.uuid_binary AS uuid_binary,
                         F.data_ver AS data_ver,
+                        F.data_sub_ver AS data_sub_ver,
+                        F.approval_status AS approval_status,
+                        F.remark AS remark,
+                        F.revision_history AS revision_history,
+                        F.approval_payload_id AS approval_payload_id,
+                        F.user_account AS user_account,
                         F.user_name AS user_name,
                         F.user_nickname AS user_nickname,
                         F.user_birthday AS user_birthday,
                         F.user_gender AS user_gender,
-                        F.revision_history AS revision_history,
                         F.approval_payload AS approval_payload,
                         F.user_auth AS user_auth,
                             CONCAT('[',
@@ -74,13 +90,18 @@ async function userList (app){
                         F.user_position_id AS user_position_id
                     FROM (
                         SELECT
-                            C.user_account AS user_account,
+                            C.uuid_binary AS uuid_binary,
                             C.data_ver AS data_ver,
+                            C.data_sub_ver AS data_sub_ver,
+                            C.approval_status AS approval_status,
+                            C.remark AS remark,
+                            C.revision_history AS revision_history,
+                            C.approval_payload_id AS approval_payload_id,
+                            C.user_account AS user_account,
                             C.user_name AS user_name,
                             C.user_nickname AS user_nickname,
                             C.user_birthday AS user_birthday,
                             C.user_gender AS user_gender,
-                            C.revision_history AS revision_history,
                             C.approval_payload AS approval_payload,
                                 CONCAT('[',
                                     GROUP_CONCAT(
@@ -98,13 +119,18 @@ async function userList (app){
                         
                         FROM (
                             SELECT
-                                A.user_account AS user_account,
+                            BIN_TO_UUID(A.uuid_binary) AS uuid_binary,
                                 A.data_ver AS data_ver,
+                                A.data_sub_ver AS data_sub_ver,
+                                A.approval_status AS approval_status,
+                                A.remark AS remark,
+                                A.revision_history AS revision_history,
+                                A.approval_payload_id AS approval_payload_id,
+                                A.user_account AS user_account,
                                 A.user_name AS user_name,
                                 A.user_nickname AS user_nickname,
                                 A.user_birthday AS user_birthday,
                                 A.user_gender AS user_gender,
-                                A.revision_history AS revision_history,
                                     CONCAT('[',
                                         GROUP_CONCAT(
                                             CONCAT('{',
@@ -127,7 +153,7 @@ async function userList (app){
                                 tb_user AS A
                                 LEFT OUTER JOIN tb_approval_payload AS B ON A.approval_payload_id = B.approval_payload_id
                             WHERE
-                                A.approval_status = 'APPROVED'
+                                A.approval_status = '${approvalStatus}'
                             GROUP BY
                                 A.user_account
                         ) AS C
@@ -147,8 +173,7 @@ async function userList (app){
                 LEFT OUTER JOIN tb_user_position AS K ON J.user_position_id = K.user_position_id
             GROUP BY
                 J.user_account
-            `
-        )
+        `)
 
         res.status(200).json(rs)
     })

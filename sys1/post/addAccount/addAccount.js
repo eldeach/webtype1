@@ -6,14 +6,49 @@ const { sendQry } = require ('../../../dbconns/maria/thisdb');
 const addAccountMsg = require('./addAccountMsg');
 
 //its components
-const insertNewApprovald = require('../../dbTransComponent/insert/insertNewApprovald');
-const insertNewIdNumber = require('../../dbTransComponent/insert/insertNewIdNumber');
-const duplicatedCheck = require('./Component/duplicatedCheck')
+const insertNewApprovald = require('../../dbTransComponent/dbInsert/insertNewApprovald');
+const insertNewIdNumber = require('../../dbTransComponent/dbInsert/insertNewIdNumber');
+
+// its components - dbSelect
+const dataVerCheck = require('./Component/dbSelect/dataVerCheck')
+const duplicatedCheck = require('./Component/dbSelect/duplicatedCheck')
+
+// its components - dbInsert
+const insertDetailedEmail = require('./Component/dbInsert/insertDetailedEmail')
+const insertDetailedPhone = require('./Component/dbInsert/insertDetailedPhone')
+const insertDetailedPosition = require('./Component/dbInsert/insertDetailedPosition')
 
 async function addAccount ( app ) {
     app.post('/addaccount', async function( req, res ) {
+
+        let max_data_ver = await dataVerCheck(req.body.user_account)
+        let data_ver = 0;
+        let data_sub_ver = 0;
+
+        if ( req.body.immediate_effective ) {
+            if ( !max_data_ver.data_ver ) {
+                data_ver += 1
+                data_sub_ver = 0
+            } else {
+                data_ver = max_data_ver.data_ver + 1;
+                data_sub_ver = 0;
+            }
+
+        } else {
+            if ( !max_data_ver.data_ver ) {
+                data_ver = 0;
+                data_sub_ver = 1;
+            } else {
+                data_ver = max_data_ver.data_ver;
+                data_sub_ver = max_data_ver.data_sub_ver + 1;
+            }
+        }
+
+        console.log(max_data_ver)
+
+
         let duplicatedAccount = await duplicatedCheck(req.body.user_account)
-        if ( duplicatedAccount ) {
+        if ( duplicatedAccount && req.body.add_type === "NEW") {
             res.status(452).json(addAccountMsg.addFail.duplicated)
         } else {
             let approval_status = 'PREPARED'
@@ -25,6 +60,14 @@ async function addAccount ( app ) {
             let user_phone_id = await insertNewIdNumber( 'user_phone_id', 'tb_user_phone_id', 'upi_' )
             let user_position_id = await insertNewIdNumber( 'user_position_id', 'tb_user_position_id', 'upi_' )
             let user_auth_id = await insertNewIdNumber( 'user_auth_id', 'tb_user_auth_id', 'uai_' )
+
+            let rsDetailedEmail = await insertDetailedEmail( user_email_id, req.body.user_email )
+            let rsDetailedPhone = await insertDetailedPhone( user_phone_id, req.body.user_phone )
+            let rsDetailedPosition = await insertDetailedPosition( user_position_id, req.body.user_position )
+
+            console.log("rsDetailedEmail " + rsDetailedEmail)
+            console.log("rsDetailedPhone " + rsDetailedPhone)
+            console.log("rsDetailedPosition " + rsDetailedPosition)
             
             let qryStr = `INSERT INTO tb_user (
                 uuid_binary,
@@ -51,8 +94,8 @@ async function addAccount ( app ) {
             )
             VALUES (
                 UUID_TO_BIN(UUID()),
-                1,
-                0,
+                ${data_ver},
+                ${data_sub_ver},
                 '${approval_status}',
                 NULL,
                 NULL,
