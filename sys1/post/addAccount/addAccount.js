@@ -1,3 +1,5 @@
+
+
 // ======================================================================================== [Import Component] js
 // Function
 const { sendQry } = require ('../../../dbconns/maria/thisdb');
@@ -5,18 +7,24 @@ const { sendQry } = require ('../../../dbconns/maria/thisdb');
 // Object
 const addAccountMsg = require('./addAccountMsg');
 
+// external components
+const hashPw = require ('../../bcrypt/hashPw')
+
 //its components
 const insertNewApprovald = require('../../dbTransComponent/dbInsert/insertNewApprovald');
 const insertNewIdNumber = require('../../dbTransComponent/dbInsert/insertNewIdNumber');
 
 // its components - dbSelect
-const dataVerCheck = require('./Component/dbSelect/dataVerCheck')
-const duplicatedCheck = require('./Component/dbSelect/duplicatedCheck')
+const dataVerCheck = require('./dbTransComponent/dbSelect/dataVerCheck')
+const duplicatedCheck = require('./dbTransComponent/dbSelect/duplicatedCheck')
 
 // its components - dbInsert
-const insertDetailedEmail = require('./Component/dbInsert/insertDetailedEmail')
-const insertDetailedPhone = require('./Component/dbInsert/insertDetailedPhone')
-const insertDetailedPosition = require('./Component/dbInsert/insertDetailedPosition')
+const insertDetailedEmail = require('./dbTransComponent/dbInsert/insertDetailedEmail')
+const insertDetailedPhone = require('./dbTransComponent/dbInsert/insertDetailedPhone')
+const insertDetailedPosition = require('./dbTransComponent/dbInsert/insertDetailedPosition')
+
+//its components - dbUpdate
+const handleOldApproved = require('./dbTransComponent/dbUpdate/handleOldApproved')
 
 async function addAccount ( app ) {
     app.post('/addaccount', async function( req, res ) {
@@ -44,8 +52,7 @@ async function addAccount ( app ) {
             }
         }
 
-        console.log(max_data_ver)
-
+        let hashedPw = await hashPw(req.body.user_pw)
 
         let duplicatedAccount = await duplicatedCheck(req.body.user_account)
         if ( duplicatedAccount && req.body.add_type === "NEW") {
@@ -101,7 +108,7 @@ async function addAccount ( app ) {
                 NULL,
                 '${approval_payload_id}',
                 '${req.body.user_account}',
-                '${req.body.user_pw}',
+                '${hashedPw}',
                 '${req.body.user_name}',
                 '${req.body.user_nickname}',
                 '${req.body.user_birthday}',
@@ -117,7 +124,9 @@ async function addAccount ( app ) {
             )`.replace(/\n/g, "")
 
             await sendQry(qryStr)
-            .then ((rs) => {
+            .then ( async (rs) => {
+                let handleAppRs = await handleOldApproved(req.body.user_account, data_ver)
+                console.log(handleAppRs)
                 res.status(200).json(addAccountMsg.addSuccess)
             })
             .catch ( (error) => {

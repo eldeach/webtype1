@@ -18,10 +18,6 @@ const flash= require('connect-flash')
 // axios AJAX
 const { default: axios } = require('axios');
 
-// bcrypt & salt 값 정의
-const bcrypt = require('bcrypt');
-const saltRounds = 1;
-
 // express-sanitizers - 아직 사용 할 일 없음
 //const expressSanitizer = require("express-sanitizer");
 

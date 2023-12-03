@@ -4,7 +4,6 @@ const { sendQry } = require ('../../../../../dbconns/maria/thisdb');
 
 async function dataVerCheck ( user_account ) {
 
-    console.log(user_account)
     let rs = await sendQry(
         `
         SELECT

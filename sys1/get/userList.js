@@ -4,8 +4,18 @@ const { sendQry } = require ('../../dbconns/maria/thisdb');
 
 async function userList (app){
     app.get('/getuserlist', async function(req, res) {
-        console.log(req.query.approval_status)
-        let approvalStatus = req.query.approval_status
+
+        let whereSat=''
+        if ( Array.isArray(req.query.approval_status)) {
+            let tempArr = []
+            req.query.approval_status.map((stValue, index) => {
+                tempArr.push(`A.approval_status = '${stValue}'`)
+            })
+            whereSat = tempArr.join(' OR ')
+        } else {
+            whereSat = `A.approval_status = '${req.query.approval_status}'`
+        }
+
         let rs = await sendQry(`
             SELECT
                 J.uuid_binary AS uuid_binary,
@@ -153,7 +163,7 @@ async function userList (app){
                                 tb_user AS A
                                 LEFT OUTER JOIN tb_approval_payload AS B ON A.approval_payload_id = B.approval_payload_id
                             WHERE
-                                A.approval_status = '${approvalStatus}'
+                                ${whereSat}
                             GROUP BY
                                 A.user_account
                         ) AS C
