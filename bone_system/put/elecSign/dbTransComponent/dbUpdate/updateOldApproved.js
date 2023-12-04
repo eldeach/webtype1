@@ -2,13 +2,13 @@
 // Function
 const { sendQry } = require ('../../../../../dbconns/maria/thisdb');
 
-async function updateOldApproved(tbl_name, user_account, curretnVer) {
+async function updateOldApproved(tbl_name, approval_payload_id) {
     let rs = await sendQry(`
-    UPDATE tb_user
-    SET
-        approval_status = 'VOID'
-    WHERE user_account = '${user_account}' AND approval_status = 'APPROVED' AND data_sub_ver = 0  AND data_ver != ${curretnVer}
+        UPDATE ${tbl_name}
+        SET approval_status = 'VOID'
+        WHERE approval_payload_id = (SELECT previous_approval_payload_id FROM tb_user WHERE approval_payload_id = '${approval_payload_id}')
     `)
+
     return rs;
 }
 

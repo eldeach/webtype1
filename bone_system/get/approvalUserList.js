@@ -1,7 +1,7 @@
 // ======================================================================================== [Import Component] js
 // Function
 const { sendQry } = require ('../../dbconns/maria/thisdb');
-
+// 결재올릴때 소속만 붙어서 나오는 유저 리스트
 async function approvalUserList (app){
     app.get('/getapprovaluserlist', async function(req, res) {
         let rs = await sendQry(

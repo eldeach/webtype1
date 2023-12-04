@@ -13,9 +13,12 @@ async function updateApprovalPayloadFinish (approval_payload_id) {
         approval_payload_id = '${approval_payload_id}'
     `)
     .then( async ( rs ) => {
+        console.log("AA")
+        console.log(rs)
         return rs
     })
     .catch(( error ) => {
+        console.log(error)
         return error
     })
 }

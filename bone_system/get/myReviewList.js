@@ -1,7 +1,7 @@
 // ======================================================================================== [Import Component] js
 // Function
 const { sendQry } = require ('../../dbconns/maria/thisdb');
-
+// 특정 시스템에서 각 결재 타입의 특정 유저에게 할당된 결재목록들 보여줌
 async function myReviewList (app){
     app.get('/getmyreviewlist', async function(req, res) {
         let rs = await sendQry( // tb_approval_payload와 tb_approval_payload_id 만 가지고 작동해야함 (범용으로 써야함)
@@ -22,7 +22,7 @@ async function myReviewList (app){
                   	D.approval_type,
                   	D.user_account,
                   	D.user_name,
-                  	D.approval,
+                  	D.chosen_approval,
                   	D.approval_date_time,
                   	D.delegated,
                   	D.user_comment
@@ -40,7 +40,7 @@ async function myReviewList (app){
                         A.approval_type,
                         A.user_account,
                         A.user_name,
-                        A.approval,
+                        A.chosen_approval,
                         A.approval_date_time,
                         A.delegated,
                         A.user_comment

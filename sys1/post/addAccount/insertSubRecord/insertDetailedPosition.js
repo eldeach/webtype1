@@ -1,12 +1,15 @@
 // ======================================================================================== [Import Component] js
 // Function
-const { sendQry } = require ('../../../../../dbconns/maria/thisdb');
+const { sendQry } = require ('../../../../dbconns/maria/thisdb');
 
 
 async function insertDetailedPosition (user_position_id, values) {
     let affectedRows = 0;
     values.map(async (value, index) =>{
-        let isertEmail = await sendQry(
+        if ( value.job_position == '' || !value.job_position ){
+
+        } else {
+        let insertRs = await sendQry(
             `INSERT INTO tb_user_position (
                 user_position_id,
                 sort_order,
@@ -24,14 +27,15 @@ async function insertDetailedPosition (user_position_id, values) {
                 '${value.job_description}'
             )
             `.replace(/\n/g, "")
-        ).then(( rs ) => {
-            console.log( rs )
-            affectedRows += 1;
-        })
-        .catch(( error ) => {
-            console.log( error )
-            affectedRows = -1;
-        })
+            ).then(( rs ) => {
+                console.log( rs )
+                affectedRows += 1;
+            })
+            .catch(( error ) => {
+                console.log( error )
+                affectedRows = -1;
+            })
+        }
     })
     return affectedRows;   
 }

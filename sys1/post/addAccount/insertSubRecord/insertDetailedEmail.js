@@ -1,12 +1,15 @@
 // ======================================================================================== [Import Component] js
 // Function
-const { sendQry } = require ('../../../../../dbconns/maria/thisdb');
+const { sendQry } = require ('../../../../dbconns/maria/thisdb');
 
 
 async function insertDetailedEmail (user_email_id, values) {
     let affectedRows = 0;
     values.map(async (value, index) =>{
-        let isertEmail = await sendQry(
+        if ( value.email_address == '' || !value.email_address ){
+
+        } else {
+        let insertRs = await sendQry(
             `INSERT INTO tb_user_email (
                 user_email_id,
                 sort_order,
@@ -22,14 +25,15 @@ async function insertDetailedEmail (user_email_id, values) {
                 '${value.email_affiliation}'
             )
             `.replace(/\n/g, "")
-        ).then(( rs ) => {
-            console.log( rs )
-            affectedRows += 1;
-        })
-        .catch(( error ) => {
-            console.log( error )
-            affectedRows = -1;
-        })
+            ).then(( rs ) => {
+                console.log( rs )
+                affectedRows += 1;
+            })
+            .catch(( error ) => {
+                console.log( error )
+                affectedRows = -1;
+            })
+        }
     })
     return affectedRows;
 }
