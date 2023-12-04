@@ -3,7 +3,7 @@
 const { sendQry } = require ('../../../dbconns/maria/thisdb');
 
 async function insertNewApprovald (tblName, sys_code, serviceType, sysName, preparedType, preparedBy, preparedDateTime ) {
-    // tb_approval_payload_id 테이블 전용
+    // tb_approval_payload_id 테이블 전용 id 추가 함수
     let rs = await sendQry(
         `SELECT MAX( CAST( REPLACE( approval_payload_id, 'ap_', '') AS INT)) AS max_no FROM tb_approval_payload_id`  
     )
