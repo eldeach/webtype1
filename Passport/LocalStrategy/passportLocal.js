@@ -17,6 +17,7 @@ const localLogout = require ( './handleSessionFunc/localLogout' )
 const sessionCheck = require ( './handleSessionFunc/sessionCheck' )
 const { sendQry, selectQry, insertQry, updateQry, batchInsertFunc, batchInsertOnDupliFunc, whereClause, truncateTable } = require ('../../dbconns/maria/thisdb');
 
+
 // Object
 const passportLocalMsg = require ( './passportLocalMsg' );
 

@@ -8,7 +8,7 @@ const { sendQry } = require ('../../../dbconns/maria/thisdb');
 const addAccountMsg = require('./addAccountMsg');
 
 // external components
-const hashPw = require ('../../../bone_system/bcrypt/hashPw')
+const changeToHash = require ('../../../bone_system/bcrypt/changeToHash')
 
 //its components
 const insertNewApprovald = require('../../../bone_system/dbTransComponent/dbInsert/insertNewApprovald');
@@ -52,7 +52,7 @@ async function addAccount ( app ) {
             }
         }
 
-        let hashedPw = await hashPw(req.body.user_pw)
+        let hashedPw = await changeToHash(req.body.user_pw)
 
         let duplicatedAccount = await duplicatedCheck(req.body.user_account)
         if ( duplicatedAccount && req.body.prepared_type === "NEW") { // 새로운 데이터 추가인데 중복된 경우 걸러주기
