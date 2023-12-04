@@ -2,7 +2,7 @@
 // Function
 const { sendQry } = require ('../../../../../dbconns/maria/thisdb');
 
-async function handleOldApproved(user_account, curretnVer) {
+async function updateOldApproved(tbl_name, user_account, curretnVer) {
     let rs = await sendQry(`
     UPDATE tb_user
     SET
@@ -12,5 +12,5 @@ async function handleOldApproved(user_account, curretnVer) {
     return rs;
 }
 
-module.exports = handleOldApproved;
+module.exports = updateOldApproved;
 

@@ -55,23 +55,23 @@ async function addAccount ( app ) {
         let hashedPw = await hashPw(req.body.user_pw)
 
         let duplicatedAccount = await duplicatedCheck(req.body.user_account)
-        if ( duplicatedAccount && req.body.add_type === "NEW") {
+        if ( duplicatedAccount && req.body.prepared_type === "NEW") { // 새로운 데이터 추가인데 중복된 경우 걸러주기
             res.status(452).json(addAccountMsg.addFail.duplicated)
         } else {
-            let approval_status = 'PREPARED'
-            if ( req.body.immediate_effective ) {
-                approval_status = 'APPROVED'
-            }
-            let approval_payload_id = await insertNewApprovald('tb_user', 'sys1', '사용자 계정 (User account)', 'System 1' )
+            let approval_payload_id = await insertNewApprovald('tb_user', 'sys1', '사용자 계정 (User account)', 'System 1', req.body.prepared_type, req.user, new Date() )
             let user_email_id = await insertNewIdNumber( 'user_email_id', 'tb_user_email_id', 'uei_' )
             let user_phone_id = await insertNewIdNumber( 'user_phone_id', 'tb_user_phone_id', 'upi_' )
             let user_position_id = await insertNewIdNumber( 'user_position_id', 'tb_user_position_id', 'upi_' )
             let user_auth_id = await insertNewIdNumber( 'user_auth_id', 'tb_user_auth_id', 'uai_' )
-
+            
             let rsDetailedEmail = await insertDetailedEmail( user_email_id, req.body.user_email )
             let rsDetailedPhone = await insertDetailedPhone( user_phone_id, req.body.user_phone )
             let rsDetailedPosition = await insertDetailedPosition( user_position_id, req.body.user_position )
-
+            
+            let approval_status = 'PREPARED'
+            if ( req.body.immediate_effective ) {
+                approval_status = 'APPROVED'
+            }
             console.log("rsDetailedEmail " + rsDetailedEmail)
             console.log("rsDetailedPhone " + rsDetailedPhone)
             console.log("rsDetailedPosition " + rsDetailedPosition)
