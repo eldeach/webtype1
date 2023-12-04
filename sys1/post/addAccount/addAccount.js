@@ -8,11 +8,11 @@ const { sendQry } = require ('../../../dbconns/maria/thisdb');
 const addAccountMsg = require('./addAccountMsg');
 
 // external components
-const hashPw = require ('../../bcrypt/hashPw')
+const hashPw = require ('../../../bone_system/bcrypt/hashPw')
 
 //its components
-const insertNewApprovald = require('../../dbTransComponent/dbInsert/insertNewApprovald');
-const insertNewIdNumber = require('../../dbTransComponent/dbInsert/insertNewIdNumber');
+const insertNewApprovald = require('../../../bone_system/dbTransComponent/dbInsert/insertNewApprovald');
+const insertNewIdNumber = require('../../../bone_system/dbTransComponent/dbInsert/insertNewIdNumber');
 
 // its components - dbSelect
 const dataVerCheck = require('./dbTransComponent/dbSelect/dataVerCheck')

@@ -4,7 +4,6 @@ const { sendQry } = require ('../../dbconns/maria/thisdb');
 
 async function myReviewList (app){
     app.get('/getmyreviewlist', async function(req, res) {
-        console.log(`WHERE E.user_account = '${req.user}' AND E.approval_type = '${req.query.approval_type}' AND sys_code = '${req.query.sys_code}'  `)
         let rs = await sendQry( // tb_approval_payload와 tb_approval_payload_id 만 가지고 작동해야함 (범용으로 써야함)
             `
             SELECT

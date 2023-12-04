@@ -72,19 +72,19 @@ const passportLocal = require('./Passport/LocalStrategy/passportLocal');
 passportLocal(app);
 
 // Sys1
-const userList = require('./sys1/get/userList');
+const userList = require('./bone_system/get/userList');
 userList(app)
 
-const approvalUserList = require('./sys1/get/approvalUserList');
+const approvalUserList = require('./bone_system/get/approvalUserList');
 approvalUserList(app)
 
 const addAccount = require('./sys1/post/addAccount/addAccount');
 addAccount(app)
 
-const myReviewList = require('./sys1/get/myReviewList');
+const myReviewList = require('./bone_system/get/myReviewList');
 myReviewList(app)
 
-const elecSign = require('./sys1/put/elecSign/elecSign');
+const elecSign = require('./bone_system/put/elecSign/elecSign');
 elecSign(app)
 
 // Middleware Function
