@@ -72,7 +72,7 @@ const passportLocal = require('./Passport/LocalStrategy/passportLocal');
 passportLocal(app);
 
 // Sys1
-const userList = require('./bone_system/get/userList');
+const userList = require('./bone_system/get/getUserList');
 userList(app)
 
 const approvalUserList = require('./bone_system/get/approvalUserList');

@@ -4,7 +4,6 @@ const { sendQry } = require ('../../dbconns/maria/thisdb');
 
 async function userList (app){
     app.get('/getuserlist', async function(req, res) {
-
         let whereSat=''
         if ( Array.isArray(req.query.approval_status)) {
             let tempArr = []
