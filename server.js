@@ -71,6 +71,13 @@ const {sendQry, selectQry, insertQry, updateQry, batchInsertFunc, batchInsertOnD
 const passportLocal = require('./Passport/LocalStrategy/passportLocal');
 passportLocal(app);
 
+// bone_system
+const myPrepared = require('./bone_system/get/myPrepared');
+myPrepared(app)
+
+const myReviewList = require('./bone_system/get/myReviewList');
+myReviewList(app)
+
 // Sys1
 const userList = require('./bone_system/get/getUserList');
 userList(app)
@@ -81,11 +88,6 @@ approvalUserList(app)
 const addAccount = require('./sys1/post/addAccount/addAccount');
 addAccount(app)
 
-const myPrepared = require('./bone_system/get/myPrepared');
-myPrepared(app)
-
-const myReviewList = require('./bone_system/get/myReviewList');
-myReviewList(app)
 
 const elecSign = require('./bone_system/put/elecSign/elecSign');
 elecSign(app)
