@@ -72,6 +72,9 @@ const passportLocal = require('./Passport/LocalStrategy/passportLocal');
 passportLocal(app);
 
 // bone_system
+const getAuthList = require('./bone_system/get/getAuthList');
+getAuthList(app)
+
 const myPrepared = require('./bone_system/get/myPrepared');
 myPrepared(app)
 
@@ -88,6 +91,9 @@ approvalUserList(app)
 const addAccount = require('./sys1/post/addAccount/addAccount');
 addAccount(app)
 
+
+const withdrawElecSign = require('./bone_system/put/elecSign/withdrawElecSign');
+withdrawElecSign(app)
 
 const elecSign = require('./bone_system/put/elecSign/elecSign');
 elecSign(app)

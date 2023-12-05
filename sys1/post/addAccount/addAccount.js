@@ -82,6 +82,8 @@ async function addAccount ( app ) {
             // 새 권한 목록 ID 발행 받기 (DB에 저장)
             let user_auth_id = await insertNewIdNumber( 'user_auth_id', 'tb_user_auth_id', 'uai_' )
             // 새로 받은 권한 목록 ID로 DB에 저장하기
+            console.log("auth_body")
+            console.log(req.body.user_auth)
             let rsDetailedAuth = await insertDetailedAuth( user_auth_id, req.body.user_auth )
 
             // 새 데이터 버전 준비
