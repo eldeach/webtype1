@@ -20,7 +20,19 @@ const addAccountMsg = {
             kor : "요청 하신 계정정보를 데이터베이스에 기록하는데 실패 했습니다. 관리자에게 문의해주세요.",
             eng : "Requested account information failed to be recorded in the database. Please contact the administrator.",
         }
-    }
+    },
+    elecSignSuccess : {
+        msgCode : "elec_sign_msg_1",
+        kor : "즉시시행이 성공하였습니다.",
+        eng : "Immediate implementation was successful.",
+    },
+    elecSignFail : {
+        dbFail : {
+            msgCode : "post_addaccount_msg_3",
+            kor : "요청 하신 정보를 데이터베이스에 기록하는데 실패 했습니다. 관리자에게 문의해주세요.",
+            eng : "Requested information failed to be recorded in the database. Please contact the administrator.",
+        }
+    },
 }
 
 module.exports = addAccountMsg;

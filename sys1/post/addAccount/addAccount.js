@@ -147,36 +147,35 @@ async function addAccount ( app ) {
                 '${req.body.previous_approval_payload_id}'
             )`.replace(/\n/g, "")
 
-            console.log(qryStr)
             let qryRs = await sendQry(qryStr)
 
             if ( req.body.immediate_effective ) {
-                await updateApprovalPayloadFinish(req.body.approval_payload_id) // 결재라인 완료 처리 (done_datetime 컬럼값 업데이트) 
+                await updateApprovalPayloadFinish(approval_payload_id) // 결재라인 완료 처리 (done_datetime 컬럼값 업데이트) 
                 .then( async ( rs ) => {
-                    let preparedType = await selectPreparedType(req.body.approval_payload_id)
+                    let preparedType = await selectPreparedType(approval_payload_id)
                     let approvalStr="APPROVED"
                     console.log(preparedType.prepared_type)
                     if ( preparedType.prepared_type == 'VOID') {
                         approvalStr = 'VOID'
                     }
-                    await updateApprovalStatus(req.body.tbl_name, req.body.approval_payload_id, approvalStr, 1) // 결재진행한 데이터 승인상태 (approval_status 컬럼값) 업데이트 - 지금 void 승인완료인경우가 고려 안된것 같음
+                    await updateApprovalStatus('tb_user', approval_payload_id, approvalStr, 1) // 결재진행한 데이터 승인상태 (approval_status 컬럼값) 업데이트
                     .then( async ( rs ) => {
-                        await updateOldApproved(req.body.tbl_name, req.body.approval_payload_id) // 이전 승인 본 VOID 처리 (모든 결재건은 이전 승인본의 approval_payload_id를 가져야함)
+                        await updateOldApproved('tb_user', approval_payload_id) // 이전 승인 본 VOID 처리 (모든 결재건은 이전 승인본의 approval_payload_id를 가져야함)
                         .then( async ( rs ) => {
-                            res.status(200).json(elecSignMsg.elecSignSuccess)
+                            res.status(200).json(addAccountMsg.elecSignSuccess)
                         })
                         .catch(( error ) => {
-                            res.status(512).json(elecSignMsg.elecSignFail.dbFail)
+                            res.status(512).json(addAccountMsg.elecSignFail.dbFail)
                         })
                     })
                     .catch(( error ) => {
                         console.log(error)
-                        res.status(512).json(elecSignMsg.elecSignFail.dbFail)
+                        res.status(512).json(addAccountMsg.elecSignFail.dbFail)
                     })
                 })
                 .catch(( error ) => {
                     console.log(error)
-                    res.status(512).json(elecSignMsg.elecSignFail.dbFail)
+                    res.status(512).json(addAccountMsg.elecSignFail.dbFail)
                 })
             }
         }

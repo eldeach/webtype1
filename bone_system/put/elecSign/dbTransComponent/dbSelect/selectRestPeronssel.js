@@ -11,7 +11,6 @@ async function selectRestPeronssel (approval_payload_id, user_account ) {
         WHERE
             approval_payload_id = '${approval_payload_id}' AND approval_type !='RECIEVE' AND approval_date_time is NULL AND user_account != '${user_account}'
     `)
-    console.log(restPersonnel)
     return restPersonnel;
 }
 

@@ -26,7 +26,6 @@ async function insertDetailedPhone (user_phone_id, values) {
                 )
                 `.replace(/\n/g, "")
             ).then(( rs ) => {
-                console.log( rs )
                 affectedRows += 1;
             })
             .catch(( error ) => {

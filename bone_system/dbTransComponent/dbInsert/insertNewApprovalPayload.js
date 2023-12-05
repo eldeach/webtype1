@@ -30,7 +30,6 @@ async function insertNewApprovalPayload (approval_payload_id, arrPpayload) {
                         user_comment = NULL
                 `.replace(/\n/g, ""))
                 .then(( rs ) => {
-                    console.log( rs )
                     affectedRows += 1;
                 })
                 .catch(( error ) => {

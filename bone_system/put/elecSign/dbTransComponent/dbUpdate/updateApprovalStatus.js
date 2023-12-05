@@ -11,16 +11,7 @@ async function updateApprovalStatus(tbl_name, approval_payload_id, approval_stat
     } else {
         subVer = 'data_sub_ver'
     }
-    console.log(`
-        UPDATE
-            ${tbl_name}
-        SET
-            approval_status = '${approval_status}',
-            data_ver = (data_ver + ${dataVerPlus}),
-            data_sub_ver = ${subVer}
-        WHERE
-            approval_payload_id = '${approval_payload_id}'
-    `)
+
    let rs =  await sendQry(`
         UPDATE
             ${tbl_name}
@@ -30,12 +21,12 @@ async function updateApprovalStatus(tbl_name, approval_payload_id, approval_stat
             data_sub_ver = ${subVer}
         WHERE
             approval_payload_id = '${approval_payload_id}'
-    `
-    )
+    `)
     .then( async ( rs ) => {
         return rs
     })
     .catch(( error ) => {
+        console.log(error)
         return error
     })
 }

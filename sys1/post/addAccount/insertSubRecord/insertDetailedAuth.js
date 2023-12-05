@@ -5,7 +5,6 @@ const { sendQry } = require ('../../../../dbconns/maria/thisdb');
 
 async function insertDetailedAuth (user_auth_id, values) {
     let affectedRows = 0;
-    console.log(values)
     values.map(async (value, index) =>{
         if ( value.auth_code == '' || !value.auth_code ){
 
@@ -21,7 +20,6 @@ async function insertDetailedAuth (user_auth_id, values) {
                 )
                 `.replace(/\n/g, "")
             ).then(( rs ) => {
-                console.log( rs )
                 affectedRows += 1;
             })
             .catch(( error ) => {

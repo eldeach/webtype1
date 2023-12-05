@@ -41,10 +41,12 @@ async function elecSign (app) {
                             res.status(200).json(elecSignMsg.elecSignSuccess)
                         })
                         .catch(( error ) => {
+                            console.log(error)
                             res.status(512).json(elecSignMsg.elecSignFail.dbFail)
                         })
                     })
                     .catch(( error ) => {
+                        console.log(error)
                         res.status(512).json(elecSignMsg.elecSignFail.dbFail)
                     })
                 } else {
@@ -54,6 +56,7 @@ async function elecSign (app) {
                             res.status(200).json(elecSignMsg.elecSignSuccess)
                         })
                         .catch(( error ) => {
+                            console.log(error)
                             res.status(512).json(elecSignMsg.elecSignFail.dbFail)
                         })
                     } else { // 마지막 승인자일 경우
@@ -88,6 +91,7 @@ async function elecSign (app) {
                 }
             })
             .catch(( error ) => {
+                console.log(error)
                 res.status(512).json(elecSignMsg.elecSignFail.dbFail)
             })
         }
