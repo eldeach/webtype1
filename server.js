@@ -81,6 +81,9 @@ approvalUserList(app)
 const addAccount = require('./sys1/post/addAccount/addAccount');
 addAccount(app)
 
+const myPrepared = require('./bone_system/get/myPrepared');
+myPrepared(app)
+
 const myReviewList = require('./bone_system/get/myReviewList');
 myReviewList(app)
 
